@@ -1,9 +1,10 @@
 import React from "react";
+import ProductCategories from "../ProductCategories/ProductCategories";
 
 const Home = () => {
   return (
-    <div>
-      <h1>This is home</h1>
+    <div className="mx-5">
+      <ProductCategories></ProductCategories>
     </div>
   );
 };

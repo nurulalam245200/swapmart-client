@@ -1,0 +1,17 @@
+[
+  {
+    "category_Id": "01",
+    "category_name": "Mac",
+    "category_image": "https://i.ibb.co/599DHVC/mac-category.jpg"
+  },
+  {
+    "category_Id": "02",
+    "category_name": "HP",
+    "category_image": "https://i.ibb.co/BzX5wTg/hp-category.jpg"
+  },
+  {
+    "category_Id": "03",
+    "category_name": "Acer",
+    "category_image": "https://i.ibb.co/9wYVFb1/acer-category.jpg"
+  }
+]
