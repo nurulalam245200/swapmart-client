@@ -1,49 +1,52 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
-import logImage from "../../images/auth/auth.gif";
+import image from "../../images/auth/signup.gif";
+const SignUp = () => {
+  const { register, handleSubmit } = useForm();
 
-const Login = () => {
-  const { login } = useContext(AuthContext);
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
-
-  const [loginUserEmail, setLogInUserEmail] = useState("");
-  const [loginError, setLoginError] = useState("");
-  const handleLoginSubmit = (data) => {
-    setLoginError("");
+  const handleSignUp = (data) => {
     console.log(data);
-    login(data.email, data.password)
-      .then((result) => {
-        const user = result.user;
-        setLogInUserEmail(data.email);
-        console.log(user);
-        toast("Successfully Log In");
-        // navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        setLoginError(error.message);
-      });
   };
   return (
     <div className="hero w-full my-20">
       <div className="hero-content grid gap-20 md:grid-cols-2 flex-col lg:flex-row">
         <div className="text-center lg:text-left">
-          <img className="w-3/4" src={logImage} alt="" />
+          <img className="w-3/4" src={image} alt="" />
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 py-20">
+          <p className="text-rose-600 text-xl font-bold text-center">
+            Are You Seller ? <br />{" "}
+            <span className="text-secondary font-bold">
+              If you not please SignUp with google !!
+            </span>
+          </p>
           <h1 className="text-5xl font-bold text-center text-accent">
-            Login Now !
+            Sign Up
           </h1>
-          <form
-            onSubmit={handleSubmit(handleLoginSubmit)}
-            className="card-body"
-          >
+          <form onSubmit={handleSubmit(handleSignUp)} className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                {...register("name", { required: true })}
+                type="text"
+                placeholder="Your Name"
+                className="input input-bordered"
+              />
+            </div>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Seller Photo</span>
+              </label>
+              <input
+                {...register("image", { required: "Photo is required" })}
+                type="file"
+                placeholder="Your Photo"
+                className="input input-bordered w-full p-1 max-w-xs"
+              />
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -56,9 +59,6 @@ const Login = () => {
                 placeholder="Your Email"
                 className="input input-bordered"
               />
-              {errors.email && (
-                <p className="text-red-600">{errors.email?.message}</p>
-              )}
             </div>
             <div className="form-control">
               <label className="label">
@@ -76,27 +76,19 @@ const Login = () => {
                 placeholder="Your Password"
                 className="input input-bordered"
               />
-              {errors.password && (
-                <p className="text-rose-600">{errors.password?.message}</p>
-              )}
-              {loginError && <p className="text-rose-600">{loginError}</p>}
-              <label className="label">
-                <Link className="label-text-alt link link-hover">
-                  Forgot password?
-                </Link>
-              </label>
             </div>
             <div className="form-control mt-6">
-              <input type="submit" className="btn btn-primary" value="Login" />
+              <input
+                type="submit"
+                className="btn bg-emerald-400 text-white"
+                value="Sign Up"
+              />
             </div>
           </form>
           <p className="text-center">
-            Are you New to SwapMart ?
-            <Link
-              className="text-rose-600 text-xl font-bold ml-2"
-              to="/register"
-            >
-              Sign Up
+            Already have an Account?
+            <Link className="text-rose-600 text-xl font-bold ml-2" to="/login">
+              Log In
             </Link>
           </p>
           <div className="divider text-blue-700 font-bold">OR</div>
@@ -109,4 +101,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

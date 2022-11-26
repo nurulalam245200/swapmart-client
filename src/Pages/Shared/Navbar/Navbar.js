@@ -15,6 +15,16 @@ const Navbar = () => {
           Blog
         </Link>
       </li>
+      <li>
+        <Link className="btn btn-outline rounded-lg mr-2" to="/login">
+          Log In
+        </Link>
+      </li>
+      <li>
+        <Link className="btn btn-outline rounded-lg mr-2" to="/register">
+          Sign In
+        </Link>
+      </li>
     </>
   );
   return (
