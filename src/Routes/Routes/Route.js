@@ -1,4 +1,5 @@
 import Blog from "../../Pages/Blog/Blog";
+import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Products/Products";
 import SignUp from "../../Pages/SignUp/SignUp";
@@ -33,5 +34,9 @@ export const router = createBrowserRouter([
         element: <SignUp></SignUp>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>,
   },
 ]);

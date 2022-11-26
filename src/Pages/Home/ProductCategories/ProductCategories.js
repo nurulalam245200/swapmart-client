@@ -1,23 +1,27 @@
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import ProductCategory from "./ProductCategory";
 
 const ProductCategories = () => {
-  const [categories, setCategories] = useState([]);
+  //   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/productsCategory")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
-  //   const { data: categories = [] } = useQueries({
-  //     queryKey: ["productsCategory"],
-  //     queryfn: async () => {
-  //       const res = fetch("http://localhost:5000/productsCategory");
-  //       const data = await res.json();
-  //       return data;
-  //     },
-  //   });
+  //   useEffect(() => {
+  //     fetch("http://localhost:5000/productsCategory")
+  //       .then((res) => res.json())
+  //       .then((data) => setCategories(data));
+  //   }, []);
+
+  const { data: categories = [] } = useQuery({
+    queryKey: ["productsCategory"],
+    queryFn: async () => {
+      try {
+        const res = await fetch("http://localhost:5000/productsCategory", {});
+        const data = await res.json();
+
+        return data;
+      } catch (error) {}
+    },
+  });
   return (
     <div>
       <h1 className="text-4xl text-accent font-bold text-center mt-5 mb-5">
