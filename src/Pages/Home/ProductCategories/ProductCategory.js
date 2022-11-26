@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const ProductCategory = ({ category }) => {
   const { category_Id, category_name, category_image } = category;
-  console.log(category_name);
+
   const navigate = useNavigate();
 
   const handleCategory = (id) => {
