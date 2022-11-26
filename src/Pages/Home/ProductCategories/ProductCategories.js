@@ -20,7 +20,7 @@ const ProductCategories = () => {
   //   });
   return (
     <div>
-      <h1 className="text-3xl text-primary font-bold text-center">
+      <h1 className="text-4xl text-accent font-bold text-center mt-5 mb-5">
         Products Area
       </h1>
 
