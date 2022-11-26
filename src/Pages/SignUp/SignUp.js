@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
 import image from "../../images/auth/signup.gif";
 const SignUp = () => {
+  const { signUp } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
 
   const handleSignUp = (data) => {
-    console.log(data);
+    signUp(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Successfully Sign Up");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="hero w-full my-20">
