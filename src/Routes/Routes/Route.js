@@ -1,4 +1,5 @@
 import Blog from "../../Pages/Blog/Blog";
+import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Products/Products";
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <Products></Products>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
       },
     ],
   },
