@@ -1,5 +1,5 @@
-import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import ProductCategory from "./ProductCategory";
 
 const ProductCategories = () => {
