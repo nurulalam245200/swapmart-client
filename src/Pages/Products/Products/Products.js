@@ -15,7 +15,7 @@ const Products = () => {
   //   });
   // }, [id]);
 
-  const { data: products = [] } = useQuery({
+  const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/products/${id.id}`);
@@ -39,7 +39,11 @@ const Products = () => {
       </div>
       <div>
         {orders && (
-          <OrdersModal orders={orders} setOrders={setOrders}></OrdersModal>
+          <OrdersModal
+            orders={orders}
+            setOrders={setOrders}
+            refetch={refetch}
+          ></OrdersModal>
         )}
       </div>
     </div>
