@@ -1,14 +1,21 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
+import useToken from "../../hooks/useToken";
 import image from "../../images/auth/signup.gif";
 const SignUp = () => {
   const { signUp, userUpdate } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const [createUserEmail, setCreateUserEmail] = useState("");
 
+  const [token] = useToken(createUserEmail);
+  const navigate = useNavigate();
+
+  if (token) {
+    navigate("/");
+  }
   const handleSignUp = (data) => {
     signUp(data.email, data.password)
       .then((result) => {
@@ -85,8 +92,8 @@ const SignUp = () => {
                 {...register("type", { required: true })}
                 className="select select-bordered input-bordered w-full max-w-xs"
               >
-                <option value="buyer">Buyer</option>
-                <option value="seller">Seller</option>
+                <option value="buyer">buyer</option>
+                <option value="seller">seller</option>
               </select>
             </div>
             <div className="form-control">
