@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
-
-const OrderModal = () => {
+import { format } from "date-fns";
+const OrdersModal = ({ orders }) => {
   const { user } = useContext(AuthContext);
-
+  const { resalePrice, name, image, _id } = orders;
   const handleBuyOrder = (event) => {};
   return (
     <>
@@ -23,19 +23,32 @@ const OrderModal = () => {
             onSubmit={handleBuyOrder}
             className="grid grid-cols-1 gap-3 mt-10"
           >
-            <input
-              type="text"
-              disabled
-              //value={date}
-              className="input w-full  input-bordered "
-            />
-            <input
-              type="text"
-              name="name"
-              defaultValue={user?.displayName}
-              placeholder="Your Name"
-              className="input w-full  input-bordered "
-            />
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text ">Date</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Date"
+                value={format(new Date(), "PP")}
+                className="input w-full  input-bordered"
+              />
+            </div>
+
+            <div>
+              <label className="label">
+                <span className="label-text ">User Name</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                readOnly
+                disabled
+                defaultValue={user?.displayName}
+                placeholder="Your Name"
+                className="input w-full  input-bordered "
+              />
+            </div>
             <input
               type="email"
               name="email"
@@ -47,20 +60,27 @@ const OrderModal = () => {
             />
             <input
               type="text"
-              name="phone"
-              placeholder="Your Phone"
+              name="productName"
+              readOnly
+              disabled
+              placeholder="Product name"
+              defaultValue={name}
               className="input w-full  input-bordered "
             />
             <input
               type="text"
               name="price"
+              defaultValue={resalePrice}
+              readOnly
+              disabled
               placeholder="Price"
               className="input w-full  input-bordered "
             />
+
             <input
               type="submit"
               className="btn btn-accent w-full"
-              value="Submit"
+              value="Buy"
             />
           </form>
         </div>
@@ -69,4 +89,4 @@ const OrderModal = () => {
   );
 };
 
-export default OrderModal;
+export default OrdersModal;

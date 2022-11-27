@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import AuthProvider from "./contexts/AuthProvider";
-
+import "react-day-picker/dist/style.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

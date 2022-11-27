@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-const Product = ({ product }) => {
-  const [orders, setOrders] = useState(null);
+const Product = ({ product, setOrders }) => {
   const {
     name,
     image,
