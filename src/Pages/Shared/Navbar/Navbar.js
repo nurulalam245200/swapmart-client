@@ -44,8 +44,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link className="btn btn-outline rounded-lg mr-2" to="/signup">
-              Sign In
+            <Link className="btn btn-outline rounded-lg mr-2" to="/register">
+              Sign Up
             </Link>
           </li>
         </>

@@ -14,7 +14,7 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   if (token) {
-    navigate("/");
+    navigate("/login");
   }
   const handleSignUp = (data) => {
     signUp(data.email, data.password)
@@ -27,7 +27,7 @@ const SignUp = () => {
         };
         userUpdate(userInfo)
           .then(() => {
-            saveUser(data.name, data.email, data.type);
+            saveUser(data.name, data.email, data.role);
           })
           .catch((error) => {
             console.log(error);
@@ -39,8 +39,8 @@ const SignUp = () => {
       });
   };
 
-  const saveUser = (email, name, type) => {
-    const user = { name, email, type };
+  const saveUser = (name, email, role) => {
+    const user = { name, email, role };
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
@@ -52,7 +52,6 @@ const SignUp = () => {
       .then((data) => {
         console.log(data);
         setCreateUserEmail(email);
-        // getUserToken(email);
       });
   };
 
@@ -89,7 +88,7 @@ const SignUp = () => {
                 <span className="label-text">User Type</span>
               </label>
               <select
-                {...register("type", { required: true })}
+                {...register("role", { required: true })}
                 className="select select-bordered input-bordered w-full max-w-xs"
               >
                 <option value="buyer">buyer</option>
