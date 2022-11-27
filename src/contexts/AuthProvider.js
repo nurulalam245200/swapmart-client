@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, userInfo);
   };
   //log out or signOut
-  const logout = () => {
+  const logOut = () => {
     return signOut(auth);
   };
 
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
   //auth info
-  const authInfo = { user, login, signUp, logout, userUpdate };
+  const authInfo = { user, login, signUp, logOut, userUpdate };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
