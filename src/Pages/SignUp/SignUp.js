@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import image from "../../images/auth/signup.gif";
 const SignUp = () => {
-  const { signUp } = useContext(AuthContext);
+  const { signUp, userUpdate } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const [createUserEmail, setCreateUserEmail] = useState("");
 
   const handleSignUp = (data) => {
     signUp(data.email, data.password)
@@ -14,11 +15,40 @@ const SignUp = () => {
         const user = result.user;
         console.log(user);
         toast.success("Successfully Sign Up");
+        const userInfo = {
+          displayName: data.name,
+        };
+        userUpdate(userInfo)
+          .then(() => {
+            saveUser(data.name, data.email, data.type);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        console.log(user);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const saveUser = (email, name, type) => {
+    const user = { name, email, type };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCreateUserEmail(email);
+        // getUserToken(email);
+      });
+  };
+
   return (
     <div className="hero w-full my-20">
       <div className="hero-content grid gap-20 md:grid-cols-2 flex-col lg:flex-row">
@@ -27,9 +57,9 @@ const SignUp = () => {
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 py-20">
           <p className="text-rose-600 text-xl font-bold text-center">
-            Are You Seller ? <br />{" "}
+            Ensure Your User Type Manual SignUp ? <br />{" "}
             <span className="text-secondary font-bold">
-              If you not please SignUp with google !!
+              If Don't please SignUp with google !!
             </span>
           </p>
           <h1 className="text-5xl font-bold text-center text-accent">
@@ -49,14 +79,15 @@ const SignUp = () => {
             </div>
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text">Seller Photo</span>
+                <span className="label-text">User Type</span>
               </label>
-              <input
-                {...register("image", { required: "Photo is required" })}
-                type="file"
-                placeholder="Your Photo"
-                className="input input-bordered w-full p-1 max-w-xs"
-              />
+              <select
+                {...register("type", { required: true })}
+                className="select select-bordered input-bordered w-full max-w-xs"
+              >
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+              </select>
             </div>
             <div className="form-control">
               <label className="label">
