@@ -36,7 +36,6 @@ const AllSellers = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
         if (result.deletedCount > 0) {
           toast.success(`${product.name} Deleted Succesfully!!`);
           refetch();

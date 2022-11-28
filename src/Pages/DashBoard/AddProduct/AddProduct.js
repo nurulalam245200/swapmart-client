@@ -34,7 +34,6 @@ const AddProduct = () => {
       .then((res) => res.json())
       .then((imageData) => {
         if (imageData.success) {
-          console.log(imageData.data.url);
           const product = {
             sellerName: data.name,
             email: data.email,
@@ -63,8 +62,6 @@ const AddProduct = () => {
               return res.json();
             })
             .then((result) => {
-              console.log(result);
-
               toast.success(`${data.productName} Successfull Product Inserted`);
               navigate(`/dashboard/manageSellerProducts/${data.email}`);
             });

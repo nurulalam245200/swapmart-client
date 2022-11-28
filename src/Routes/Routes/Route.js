@@ -15,6 +15,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import SellerRoute from "../SallerRoute/SellerRoute";
 import AllSellers from "../../Pages/DashBoard/AllSellers/AllSellers";
 import ManageSellerProduct from "../../Pages/DashBoard/ManageSellerProduct/ManageSellerProduct";
+import Payment from "../../Pages/DashBoard/Payment/Payment";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layouts/Main");
@@ -35,12 +36,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <Products></Products>,
+        element: (
+          <PrivateRoute>
+            <Products></Products>
+          </PrivateRoute>
+        ),
       },
-      {
-        path: "/products/:id",
-        element: <Products></Products>,
-      },
+
       {
         path: "/login",
         element: <Login></Login>,
@@ -73,16 +75,34 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/addProduct",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <SellerRoute>
+            <AddProduct></AddProduct>
+          </SellerRoute>
+        ),
       },
       {
         path: "/dashboard/manageSeller/:role",
-        element: <AllSellers></AllSellers>,
+        element: (
+          <AdminRoute>
+            <AllSellers></AllSellers>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/manageSellerProducts/:role",
-        element: <ManageSellerProduct></ManageSellerProduct>,
+        element: (
+          <SellerRoute>
+            <ManageSellerProduct></ManageSellerProduct>
+          </SellerRoute>
+        ),
       },
+      // {
+      //   path: "/dashboard/payment/:id",
+      //   element: <Payment></Payment>,
+      //   loader: ({ params }) =>
+      //     fetch(`http://localhost:5000/cart/${params.id}`),
+      // },
     ],
   },
   {

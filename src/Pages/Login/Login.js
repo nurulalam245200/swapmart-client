@@ -29,12 +29,12 @@ const Login = () => {
   }
   const handleLoginSubmit = (data) => {
     setLoginError("");
-    console.log(data);
+
     login(data.email, data.password)
       .then((result) => {
         const user = result.user;
         setLogInUserEmail(data.email);
-        console.log(user);
+
         toast("Successfully Log In");
       })
       .catch((error) => {

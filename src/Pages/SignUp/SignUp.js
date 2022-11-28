@@ -23,7 +23,7 @@ const SignUp = () => {
     signUp(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+
         toast.success("Successfully Sign Up");
         const userInfo = {
           displayName: data.name,
@@ -35,7 +35,6 @@ const SignUp = () => {
           .catch((error) => {
             console.log(error);
           });
-        console.log(user);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +52,6 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCreateUserEmail(email);
       });
   };
@@ -78,10 +76,8 @@ const SignUp = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-            // setCreateUserEmail());
+            toast.success("Add In database like as Buyer");
           });
-        console.log(user);
       })
       .catch((e) => setError(e.message));
   };
