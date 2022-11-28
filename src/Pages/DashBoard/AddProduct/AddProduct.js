@@ -49,7 +49,7 @@ const AddProduct = () => {
             details: data.details,
             postTime: data.postTime,
           };
-          fetch("http://localhost:5000/products", {
+          fetch("https://swapmart-server.vercel.app/products", {
             method: "POST",
             headers: {
               "content-type": "application/json",

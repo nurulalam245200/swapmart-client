@@ -15,7 +15,9 @@ const AllSellers = () => {
   } = useQuery({
     queryKey: ["sellers"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/users/${role.role}`);
+      const res = await fetch(
+        `https://swapmart-server.vercel.app/users/${role.role}`
+      );
       const data = await res.json();
       return data;
     },
@@ -28,7 +30,7 @@ const AllSellers = () => {
     setdeletingSeller(null);
   };
   const handleDeleteSeller = (product) => {
-    fetch(`http://localhost:5000/products/${product._id}`, {
+    fetch(`https://swapmart-server.vercel.app/products/${product._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -45,7 +47,7 @@ const AllSellers = () => {
 
   //make verified
   const handleMakeVerified = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://swapmart-server.vercel.app/users/${id}`, {
       method: "PUT",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,

@@ -6,7 +6,7 @@ const ProductCategories = () => {
   //   const [categories, setCategories] = useState([]);
 
   //   useEffect(() => {
-  //     fetch("http://localhost:5000/productsCategory")
+  //     fetch("https://swapmart-server.vercel.app/productsCategory")
   //       .then((res) => res.json())
   //       .then((data) => setCategories(data));
   //   }, []);
@@ -15,7 +15,10 @@ const ProductCategories = () => {
     queryKey: ["productsCategory"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:5000/productsCategory", {});
+        const res = await fetch(
+          "https://swapmart-server.vercel.app/productsCategory",
+          {}
+        );
         const data = await res.json();
 
         return data;

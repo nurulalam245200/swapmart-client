@@ -23,7 +23,7 @@ const OrdersModal = ({ orders, setOrders, refetch }) => {
       image: image,
     };
 
-    fetch("http://localhost:5000/cart", {
+    fetch("https://swapmart-server.vercel.app/cart", {
       method: "POST",
       headers: {
         "content-type": "application/json",

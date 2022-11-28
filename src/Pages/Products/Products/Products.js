@@ -10,7 +10,7 @@ const Products = () => {
   const id = useParams();
   const [orders, setOrders] = useState(null);
   // useEffect(() => {
-  //   axios.get(`http://localhost:5000/products/${id.id}`).then((data) => {
+  //   axios.get(`https://swapmart-server.vercel.app/products/${id.id}`).then((data) => {
   //     setProducts(data.data);
   //   });
   // }, [id]);
@@ -18,7 +18,9 @@ const Products = () => {
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/products/${id.id}`);
+      const res = await fetch(
+        `https://swapmart-server.vercel.app/products/${id.id}`
+      );
       const data = await res.json();
       return data;
     },

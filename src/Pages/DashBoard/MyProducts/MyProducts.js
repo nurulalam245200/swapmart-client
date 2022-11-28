@@ -18,7 +18,7 @@ const MyProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`
+        `https://swapmart-server.vercel.app/products?email=${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -32,11 +32,8 @@ const MyProducts = () => {
     setdeletingProduct(null);
   };
   const handleDeleteProduct = (product) => {
-    fetch(`http://localhost:5000/products/${product.email}`, {
+    fetch(`https://swapmart-server.vercel.app/products/${product._id}`, {
       method: "DELETE",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
     })
       .then((res) => res.json())
       .then((result) => {

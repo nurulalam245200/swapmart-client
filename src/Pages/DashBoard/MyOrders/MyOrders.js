@@ -6,7 +6,7 @@ import Loading from "../../Shared/Loading/Loading";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
-  const url = `http://localhost:5000/cart?email=${user?.email}`;
+  const url = `https://swapmart-server.vercel.app/cart?email=${user?.email}`;
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["cart", user?.email],
