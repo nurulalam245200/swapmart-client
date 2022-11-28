@@ -22,6 +22,7 @@ const Products = () => {
         `https://swapmart-server.vercel.app/products/${id.id}`
       );
       const data = await res.json();
+      console.log(data);
       return data;
     },
   });
