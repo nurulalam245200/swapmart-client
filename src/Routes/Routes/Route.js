@@ -16,6 +16,7 @@ import SellerRoute from "../SallerRoute/SellerRoute";
 import AllSellers from "../../Pages/DashBoard/AllSellers/AllSellers";
 import Payment from "../../Pages/DashBoard/Payment/Payment";
 import MyProducts from "../../Pages/DashBoard/MyProducts/MyProducts";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layouts/Main");
@@ -62,8 +63,12 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/dashboard",
-        element: <MyOrders></MyOrders>,
+        path: "/dashboard/myorder",
+        element: (
+          <BuyerRoute>
+            <MyOrders></MyOrders>
+          </BuyerRoute>
+        ),
       },
       {
         path: "/dashboard/users",
