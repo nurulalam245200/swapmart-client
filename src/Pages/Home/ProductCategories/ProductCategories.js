@@ -1,30 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 import ProductCategory from "./ProductCategory";
 
 const ProductCategories = () => {
-  //   const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  //   useEffect(() => {
-  //     fetch("https://swapmart-server.vercel.app/productsCategory")
-  //       .then((res) => res.json())
-  //       .then((data) => setCategories(data));
-  //   }, []);
+  useEffect(() => {
+    fetch("https://swapmart-server.vercel.app/productsCategory")
+      .then((res) => res.json())
+      .then((data) => setCategories(data));
+  }, []);
 
-  const { data: categories = [] } = useQuery({
-    queryKey: ["productsCategory"],
-    queryFn: async () => {
-      try {
-        const res = await fetch(
-          "https://swapmart-server.vercel.app/productsCategory",
-          {}
-        );
-        const data = await res.json();
+  // const { data: categories = [] } = useQuery({
+  //   queryKey: ["productsCategory"],
+  //   queryFn: async () => {
+  //     try {
+  //       const res = await fetch(
+  //         "https://swapmart-server.vercel.app/productsCategory",
+  //         {}
+  //       );
+  //       const data = await res.json();
 
-        return data;
-      } catch (error) {}
-    },
-  });
+  //       return data;
+  //     } catch (error) {}
+  //   },
+  // });
   return (
     <div>
       <h1 className="text-4xl text-accent font-bold text-center mt-5 mb-5">

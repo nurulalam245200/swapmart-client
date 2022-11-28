@@ -32,8 +32,8 @@ its for access token validation and save it in localhost
 
 ## packages
 
-react -firebase,queries,date-fns,toaster,form etc
+react -firebase,usequeries,date-fns,toaster,useform etc
 
 ## payment option
 
-react-stripe impliment
+react-stripe impliment but not worked

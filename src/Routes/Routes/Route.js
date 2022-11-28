@@ -103,7 +103,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/cart/:id",
+        path: "/dashboard/payment/:id",
         element: <Payment></Payment>,
         loader: ({ params }) =>
           fetch(`https://swapmart-server.vercel.app/cart/${params.id}`),
