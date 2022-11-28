@@ -102,12 +102,12 @@ export const router = createBrowserRouter([
           </SellerRoute>
         ),
       },
-      // {
-      //   path: "/dashboard/payment/:id",
-      //   element: <Payment></Payment>,
-      //   loader: ({ params }) =>
-      //     fetch(`https://swapmart-server.vercel.app/cart/${params.id}`),
-      // },
+      {
+        path: "/dashboard/cart/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) =>
+          fetch(`https://swapmart-server.vercel.app/cart/${params.id}`),
+      },
     ],
   },
   {

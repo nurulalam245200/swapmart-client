@@ -57,10 +57,7 @@ const AddProduct = () => {
             },
             body: JSON.stringify(product),
           })
-            .then((res) => {
-              setIsLoading(true);
-              return res.json();
-            })
+            .then((res) => res.json())
             .then((result) => {
               toast.success(`${data.productName} Successfull Product Inserted`);
               navigate(`/dashboard/myProducts`);
