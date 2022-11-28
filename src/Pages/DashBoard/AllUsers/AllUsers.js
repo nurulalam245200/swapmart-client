@@ -15,7 +15,7 @@ const AllUsers = () => {
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/users");
       const data = await res.json();
-      console.log(data);
+
       return data;
     },
   });
@@ -63,9 +63,15 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  {user?.role !== "admin" && (
-                    <button className="btn btn-xs btn-secondary">
-                      Make Admin
+                  {user?.role !== "admin" ? (
+                    <>
+                      <button className="btn btn-xs btn-secondary">
+                        Make Admin
+                      </button>
+                    </>
+                  ) : (
+                    <button disabled className="btn btn-xs btn-secondary">
+                      Admin
                     </button>
                   )}
                 </td>
