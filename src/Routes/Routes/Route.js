@@ -14,8 +14,8 @@ import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import SellerRoute from "../SallerRoute/SellerRoute";
 import AllSellers from "../../Pages/DashBoard/AllSellers/AllSellers";
-import ManageSellerProduct from "../../Pages/DashBoard/ManageSellerProduct/ManageSellerProduct";
 import Payment from "../../Pages/DashBoard/Payment/Payment";
+import MyProducts from "../../Pages/DashBoard/MyProducts/MyProducts";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layouts/Main");
@@ -90,10 +90,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/manageSellerProducts/:role",
+        path: "/dashboard/myProducts",
         element: (
           <SellerRoute>
-            <ManageSellerProduct></ManageSellerProduct>
+            <MyProducts></MyProducts>
           </SellerRoute>
         ),
       },

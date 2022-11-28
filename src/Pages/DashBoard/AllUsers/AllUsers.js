@@ -73,7 +73,7 @@ const AllUsers = () => {
                       <p className="btn btn-xs btn-secondary">Buyer</p>
                     </>
                   )}
-                  {user?.role === "dmin" && (
+                  {user?.role === "admin" && (
                     <>
                       <p className="btn btn-xs btn-secondary">Admin</p>
                     </>

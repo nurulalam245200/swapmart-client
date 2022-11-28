@@ -63,7 +63,7 @@ const AddProduct = () => {
             })
             .then((result) => {
               toast.success(`${data.productName} Successfull Product Inserted`);
-              navigate(`/dashboard/manageSellerProducts/${data.email}`);
+              navigate(`/dashboard/myProducts`);
             });
         }
       });

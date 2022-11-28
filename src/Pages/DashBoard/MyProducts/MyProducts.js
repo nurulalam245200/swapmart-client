@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 import Loading from "../../Shared/Loading/Loading";
 
-const ManageProduct = () => {
+const MyProducts = () => {
   const [deletingProduct, setdeletingProduct] = useState(null);
+  const { user } = useContext(AuthContext);
+
   const {
     data: products = [],
     refetch,
@@ -13,9 +17,10 @@ const ManageProduct = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/products");
+      const res = await fetch(
+        `http://localhost:5000/products?email=${user?.email}`
+      );
       const data = await res.json();
-
       return data;
     },
   });
@@ -27,7 +32,7 @@ const ManageProduct = () => {
     setdeletingProduct(null);
   };
   const handleDeleteProduct = (product) => {
-    fetch(`http://localhost:5000/products/${product._id}`, {
+    fetch(`http://localhost:5000/products/${product.email}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -43,25 +48,9 @@ const ManageProduct = () => {
       });
   };
 
-  //make verified
-  const handleMakeVerified = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          toast.success("Verified Succesfully");
-          refetch();
-        }
-      });
-  };
   return (
     <div>
-      <h2 className="text-4xl">All Users</h2>
+      <h2 className="text-4xl mb-5">My Products</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -72,7 +61,7 @@ const ManageProduct = () => {
               <th>Price</th>
               <th>Seller Name</th>
               <th>Email</th>
-              <th>Type</th>
+              <th>Modify</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -94,11 +83,8 @@ const ManageProduct = () => {
                 <td>
                   {product?.isVerified !== "yes" && (
                     <>
-                      <button
-                        onClick={() => handleMakeVerified(product._id)}
-                        className="btn btn-xs btn-secondary"
-                      >
-                        Make Verified
+                      <button className="btn btn-xs btn-secondary">
+                        For Adv
                       </button>
                     </>
                   )}
@@ -131,4 +117,4 @@ const ManageProduct = () => {
   );
 };
 
-export default ManageProduct;
+export default MyProducts;
