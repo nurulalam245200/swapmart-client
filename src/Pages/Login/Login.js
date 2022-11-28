@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -7,7 +8,7 @@ import useToken from "../../hooks/useToken";
 import logImage from "../../images/auth/auth.gif";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login, googleSignUp } = useContext(AuthContext);
   const {
     register,
     formState: { errors },
@@ -16,7 +17,8 @@ const Login = () => {
   const [loginUserEmail, setLogInUserEmail] = useState("");
   const [loginError, setLoginError] = useState("");
   const location = useLocation();
-
+  const googleProvider = new GoogleAuthProvider();
+  const [error, setError] = useState("");
   const [token] = useToken(loginUserEmail);
   const navigate = useNavigate();
 
@@ -38,6 +40,16 @@ const Login = () => {
       .catch((error) => {
         setLoginError(error.message);
       });
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignUp(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        toast("Add Login Successfully");
+        navigate("/");
+      })
+      .catch((e) => setError(e.message));
   };
   return (
     <div className="hero w-full my-20">
@@ -109,7 +121,11 @@ const Login = () => {
             </Link>
           </p>
           <div className="divider text-blue-700 font-bold">OR</div>
-          <button className="btn btn-outline w-4/5 mx-auto">
+          {error && <p className="text-rose-600">{error}</p>}
+          <button
+            onClick={handleGoogleLogin}
+            className="btn btn-outline w-4/5 mx-auto"
+          >
             GOOGLE SIGN IN
           </button>
         </div>

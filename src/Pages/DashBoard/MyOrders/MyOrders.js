@@ -2,12 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import Loading from "../../Shared/Loading/Loading";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
   const url = `http://localhost:5000/cart?email=${user?.email}`;
 
-  const { data: orders = [] } = useQuery({
+  const { data: orders = [], isLoading } = useQuery({
     queryKey: ["cart", user?.email],
     queryFn: async () => {
       const res = await fetch(url, {
@@ -19,6 +20,9 @@ const MyOrders = () => {
       return data;
     },
   });
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <h2 className="text-4xl mb-5">My Orders</h2>
@@ -41,11 +45,13 @@ const MyOrders = () => {
                 <th>{idx + 1}</th>
                 <td>{order.userName}</td>
                 <td>{order.productName}</td>
-                <div className="avatar">
-                  <div className="w-20 rounded">
-                    <img src={order.image} alt="" />
+                <td>
+                  <div className="avatar">
+                    <div className="w-20 rounded">
+                      <img src={order.image} alt="" />
+                    </div>
                   </div>
-                </div>
+                </td>
                 <td>{order.orderDate}</td>
                 <td>{order.price}</td>
                 <td>

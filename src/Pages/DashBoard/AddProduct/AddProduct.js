@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -13,17 +12,13 @@ const AddProduct = () => {
     formState: { errors },
     register,
   } = useForm();
+
   const { user } = useContext(AuthContext);
+
   const imageHostingKey = process.env.REACT_APP_imagebb_key;
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { data: productInfo = [], isLoading } = useQuery({
-    queryKey: ["productInfo"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:5000/productInfo");
-      const data = await res.json();
-      return data;
-    },
-  });
+
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -63,11 +58,15 @@ const AddProduct = () => {
             },
             body: JSON.stringify(product),
           })
-            .then((res) => res.json())
+            .then((res) => {
+              setIsLoading(true);
+              return res.json();
+            })
             .then((result) => {
               console.log(result);
+
               toast.success(`${data.productName} Successfull Product Inserted`);
-              navigate("/dashboard/manageproducts");
+              navigate(`/dashboard/manageSellerProducts/${data.email}`);
             });
         }
       });
@@ -86,6 +85,7 @@ const AddProduct = () => {
               type="text"
               placeholder="Your Name"
               defaultValue={user.displayName}
+              readOnly
               className="input input-bordered input-primary w-full max-w-xs"
             />
             {errors.name && (

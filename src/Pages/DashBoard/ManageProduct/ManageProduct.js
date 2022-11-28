@@ -4,16 +4,16 @@ import toast from "react-hot-toast";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 import Loading from "../../Shared/Loading/Loading";
 
-const AllUsers = () => {
-  const [deletingUser, setdeletingUser] = useState(null);
+const ManageProduct = () => {
+  const [deletingUser, setdeletingProduct] = useState(null);
   const {
-    data: users = [],
+    data: products = [],
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch("http://localhost:5000/products");
       const data = await res.json();
 
       return data;
@@ -24,10 +24,10 @@ const AllUsers = () => {
   }
 
   const closeModal = () => {
-    setdeletingUser(null);
+    setdeletingProduct(null);
   };
-  const handleDeleteUser = (user) => {
-    fetch(`http://localhost:5000/users/${user._id}`, {
+  const handleDeleteProduct = (product) => {
+    fetch(`http://localhost:5000/products/${product._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -37,7 +37,24 @@ const AllUsers = () => {
       .then((result) => {
         console.log(result);
         if (result.deletedCount > 0) {
-          toast.success(`Doctor ${user.name} Deleted Succesfully!!`);
+          toast.success(`${product.name} Deleted Succesfully!!`);
+          refetch();
+        }
+      });
+  };
+
+  //make verified
+  const handleMakeVerified = (id) => {
+    fetch(`http://localhost:5000/products/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success("Verified Succesfully");
           refetch();
         }
       });
@@ -50,38 +67,45 @@ const AllUsers = () => {
           <thead>
             <tr>
               <th>SL</th>
-              <th>Name</th>
+              <th>Picture</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Seller Name</th>
               <th>Email</th>
               <th>Type</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user, idx) => (
-              <tr key={user._id}>
-                <th>{idx + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
+            {products.map((product, idx) => (
+              <tr key={product._id}>
+                <td>{idx + 1}</td>
                 <td>
-                  {user?.role === "seller" && (
+                  <div className="avatar">
+                    <div className="w-20 rounded">
+                      <img src={product.image} alt="" />
+                    </div>
+                  </div>
+                </td>
+                <td>{product.name}</td>
+                <td>{product.resalePrice}</td>
+                <td>{product.sellerName}</td>
+                <td>{product.email}</td>
+                <td>
+                  {product?.isVerified !== "yes" && (
                     <>
-                      <p className="btn btn-xs btn-secondary">Seller</p>
-                    </>
-                  )}
-                  {user?.role === "buyer" && (
-                    <>
-                      <p className="btn btn-xs btn-secondary">Buyer</p>
-                    </>
-                  )}
-                  {user?.role === "dmin" && (
-                    <>
-                      <p className="btn btn-xs btn-secondary">Admin</p>
+                      <button
+                        onClick={() => handleMakeVerified(product._id)}
+                        className="btn btn-xs btn-secondary"
+                      >
+                        Make Verified
+                      </button>
                     </>
                   )}
                 </td>
                 <td>
                   <label
-                    onClick={() => setdeletingUser(user)}
+                    onClick={() => setdeletingProduct(product)}
                     htmlFor="confirmation-modal"
                     className="btn btn-xs btn-error text-white"
                   >
@@ -97,7 +121,7 @@ const AllUsers = () => {
         <ConfirmationModal
           title={`Are you Sure to Delete???`}
           message={`Do you confirm to delete ${deletingUser.name}. If it happend, It cannot undone later. If you sure so can done it!!!`}
-          successAction={handleDeleteUser}
+          successAction={handleDeleteProduct}
           modalData={deletingUser}
           sccessButtonName="Delete"
           closeModal={closeModal}
@@ -107,4 +131,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default ManageProduct;

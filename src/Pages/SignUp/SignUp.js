@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -6,8 +7,10 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import useToken from "../../hooks/useToken";
 import image from "../../images/auth/signup.gif";
 const SignUp = () => {
-  const { signUp, userUpdate } = useContext(AuthContext);
+  const { signUp, userUpdate, googleSignUp } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const [error, setError] = useState("");
+  const googleProvider = new GoogleAuthProvider();
   const [createUserEmail, setCreateUserEmail] = useState("");
 
   const [token] = useToken(createUserEmail);
@@ -55,6 +58,33 @@ const SignUp = () => {
       });
   };
 
+  const handleGoogleSignUp = () => {
+    googleSignUp(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        toast("Add SignUp Successfully");
+        navigate("/");
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          role: "buyer",
+        };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            // setCreateUserEmail());
+          });
+        console.log(user);
+      })
+      .catch((e) => setError(e.message));
+  };
   return (
     <div className="hero w-full my-20">
       <div className="hero-content grid gap-20 md:grid-cols-2 flex-col lg:flex-row">
@@ -140,7 +170,10 @@ const SignUp = () => {
             </Link>
           </p>
           <div className="divider text-blue-700 font-bold">OR</div>
-          <button className="btn btn-outline w-4/5 mx-auto">
+          <button
+            onClick={handleGoogleSignUp}
+            className="btn btn-outline w-4/5 mx-auto"
+          >
             GOOGLE SIGN IN
           </button>
         </div>

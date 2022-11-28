@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import axios from "axios";
+import { FaMapMarkerAlt, FaRegCheckCircle } from "react-icons/fa";
 const Product = ({ product, setOrders }) => {
   const {
     name,
     image,
-    origalPrice,
+    originalPrice,
     resalePrice,
     phone,
     location,
@@ -13,8 +13,9 @@ const Product = ({ product, setOrders }) => {
     yearUseTime,
     condition,
     details,
+    isVerified,
   } = product;
-
+  axios.get("http://localhost:5000/users");
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure>
@@ -26,20 +27,28 @@ const Product = ({ product, setOrders }) => {
           <div className="badge badge-secondary">{condition}</div>
         </h2>
         <p>{details}</p>
-        <small className="text-accent">Use Time : {yearUseTime}</small>
-        <small className="text-accent">Posted: {postTime}</small>
+        <div className="flex flex-row justify-between items-center">
+          <small className="text-accent">Use Time : {yearUseTime}</small>
+          <small className="text-accent">Posted: {postTime}</small>
+        </div>
         <div className="flex justify-between">
           <div>
-            <p>
-              <small>Saller Name: {sellerName}</small>
+            <p className="flex justify-center items-center flex-row">
+              <span className="mr-2">Saller Name: {sellerName}</span>
+              {isVerified && (
+                <small>
+                  <FaRegCheckCircle className="text-blue-600 text-xl"></FaRegCheckCircle>
+                </small>
+              )}
             </p>
             <p>
               <small>Phone: {phone}</small>
             </p>
-            <p>
+            <p className="flex flex-row items-center">
+              Location:
+              <small className="mr-2 ml-1">{location}</small>
               <small>
-                {location}
-                <FaMapMarkerAlt></FaMapMarkerAlt>
+                <FaMapMarkerAlt className="text-rose-600"></FaMapMarkerAlt>
               </small>
             </p>
           </div>
@@ -47,7 +56,7 @@ const Product = ({ product, setOrders }) => {
             <p className="text-2xl text-rose-500 ">
               ${resalePrice}
               <small className="text-accent ml-2 line-through">
-                ${origalPrice}
+                ${originalPrice}
               </small>
             </p>
             <div>
